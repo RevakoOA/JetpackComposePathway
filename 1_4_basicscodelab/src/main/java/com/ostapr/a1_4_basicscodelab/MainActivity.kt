@@ -4,8 +4,12 @@ import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,26 +31,32 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Greeting("Android")
+fun MyApp(names: List<String> = listOf("World", "Compose"), modifier: Modifier = Modifier) {
+    Column(modifier.padding(vertical = 4.dp)) {
+        for (name in names) {
+            Greeting(name)
+        }
     }
 }
 
 @Composable
 fun Greeting(name: String) {
-    Surface(color = MaterialTheme.colorScheme.primary) {
-        Text(
-            text = "Hello $name!",
-            modifier = Modifier.padding(24.dp)
-        )
+    Surface(color = MaterialTheme.colorScheme.primary, modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 8.dp, vertical = 4.dp)) {
+        Row(modifier = Modifier.padding(24.dp)) {
+            Column(Modifier.weight(1f)) {
+                Text(text = "Hello,")
+                Text(text = name)
+            }
+            ElevatedButton(onClick = { /* TODO */ }) {
+                Text("Show more")
+            }
+        }
     }
 }
 
-@Preview(name = "Light theme", showBackground = true, uiMode = UI_MODE_TYPE_NORMAL)
+@Preview(name = "Light theme", showBackground = true, widthDp = 320, uiMode = UI_MODE_TYPE_NORMAL)
 @Composable
 fun GreetingPreview() {
     BasicsCodelabTheme {
