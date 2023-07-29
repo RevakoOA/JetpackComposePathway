@@ -1,5 +1,6 @@
 package com.ostapr.a1_4_basicscodelab
 
+import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,7 +35,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(name = "Light theme", showBackground = true, uiMode = UI_MODE_TYPE_NORMAL)
 @Composable
 fun GreetingPreview() {
     BasicsCodelabTheme {
