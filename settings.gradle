@@ -13,3 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ComposePathway"
+include ':1_4_basicscodelab'
