@@ -62,6 +62,7 @@ import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codelab.basiclayouts.ui.theme.MySootheTheme
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,7 +146,7 @@ fun FavoriteCollectionCard(
 @Composable
 fun AlignYourBodyRow(
     modifier: Modifier = Modifier,
-    items: List<DrawableStringPair>
+    items: List<DrawableStringPair> = alignYourBodyData,
 ) {
     LazyRow(modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -162,23 +163,34 @@ fun FavoriteCollectionsGrid(
     modifier: Modifier = Modifier,
     items: List<DrawableStringPair> = favoriteCollectionsData,
 ) {
-    LazyHorizontalGrid(modifier = modifier.height(120.dp),
+    LazyHorizontalGrid(
+        modifier = modifier.height(120.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         rows = GridCells.Fixed(2), content = {
-        items(items) { item ->
-            FavoriteCollectionCard(info = item)
-        }
-    })
+            items(items) { item ->
+                FavoriteCollectionCard(info = item)
+            }
+        })
 }
 
-// Step: Home section - Slot APIs
 @Composable
 fun HomeSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    title: String,
+    content: @Composable () -> Unit,
 ) {
-    // Implement composable here
+    Column(modifier = modifier.fillMaxWidth()) {
+        Text(
+            title.uppercase(Locale.getDefault()),
+            style = MaterialTheme.typography.h2.copy(),
+            modifier = Modifier
+                .paddingFromBaseline(40.dp, 8.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
 }
 
 // Step: Home screen - Scrolling
@@ -263,13 +275,22 @@ fun FavoriteCollectionsGridPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun AlignYourBodyRowPreview() {
-    MySootheTheme { AlignYourBodyRow(modifier = Modifier, items = alignYourBodyData) }
+    MySootheTheme { AlignYourBodyRow(modifier = Modifier) }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun HomeSectionPreview() {
-    MySootheTheme { HomeSection() }
+    MySootheTheme {
+        Column() {
+            HomeSection(title = stringResource(id = R.string.align_your_body), content = {
+                AlignYourBodyRow()
+            })
+            HomeSection(title = stringResource(id = R.string.favorite_collections), content = {
+                FavoriteCollectionsGrid()
+            })
+        }
+    }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
