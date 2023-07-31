@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "ComposePathway"
 include ':1_4_basicscodelab'
 include ':1_6_basic_layouts'
+include ':1_7_basic_state'
