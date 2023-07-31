@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/1_4_basicscodelab" />
             <option value="$PROJECT_DIR$/1_6_basic_layouts" />
+            <option value="$PROJECT_DIR$/1_7_basic_state" />
           </set>
         </option>
       </GradleProjectSettings>
