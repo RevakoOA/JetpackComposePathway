@@ -23,7 +23,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Arrangement.SpaceEvenly
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -35,7 +34,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
@@ -46,9 +44,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -62,10 +60,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codelab.basiclayouts.ui.theme.MySootheTheme
@@ -203,8 +199,6 @@ fun HomeSection(
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        Spacer(modifier = Modifier.height(16.dp))
-        SearchBar(modifier = Modifier.padding(horizontal = 16.dp))
         HomeSection(title = stringResource(id = R.string.align_your_body), content = {
             AlignYourBodyRow()
         })
@@ -217,27 +211,32 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
-    BottomNavigation(modifier = modifier, backgroundColor = MaterialTheme.colors.background) {
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.background,
+        modifier = modifier
+    ) {
         BottomNavigationItem(
-            icon = { Image(imageVector = Icons.Default.Spa, contentDescription = null) },
+            icon = { Icon(imageVector = Icons.Default.Spa, contentDescription = null) },
             label = { Text(stringResource(id = R.string.bottom_navigation_home)) },
             selected = true,
-            onClick = { /* TODO */ })
+            onClick = {}
+        )
         BottomNavigationItem(
-            icon = { Image(imageVector = Icons.Default.AccountCircle, contentDescription = null) },
+            icon = { Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null) },
             label = { Text(stringResource(id = R.string.bottom_navigation_profile)) },
             selected = false,
             onClick = { /* TODO */ })
     }
 }
 
-// Step: MySoothe App - Scaffold
 @Composable
-fun MySootheApp() {
+fun MySootheApp(modifier: Modifier = Modifier) {
     MySootheTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            SearchBar()
-        }
+        Scaffold(
+            modifier = modifier,
+            topBar = { SearchBar(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) },
+            content = { padding -> HomeScreen(Modifier.padding(padding)) },
+            bottomBar = { SootheBottomNavigation() })
     }
 }
 
