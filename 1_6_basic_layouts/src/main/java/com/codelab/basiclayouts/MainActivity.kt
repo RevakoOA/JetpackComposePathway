@@ -24,6 +24,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -32,6 +33,8 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -134,12 +137,19 @@ fun FavoriteCollectionCard(
     }
 }
 
-// Step: Align your body row - Arrangements
 @Composable
 fun AlignYourBodyRow(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    items: List<DrawableStringPair>
 ) {
-    // Implement composable here
+    LazyRow(modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        content = {
+        items(items) { item ->
+            AlignYourBodyElement(info = item)
+        }
+    })
 }
 
 // Step: Favorite collections grid - LazyGrid
@@ -240,7 +250,7 @@ fun FavoriteCollectionsGridPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun AlignYourBodyRowPreview() {
-    MySootheTheme { AlignYourBodyRow() }
+    MySootheTheme { AlignYourBodyRow(modifier = Modifier, items = alignYourBodyData) }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
