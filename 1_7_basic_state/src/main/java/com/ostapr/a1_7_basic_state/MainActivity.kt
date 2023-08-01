@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ostapr.a1_7_basic_state.ui.theme.BasicStateTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,17 +37,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun WellnessScreen(modifier: Modifier = Modifier) {
+private fun WellnessScreen(
+    modifier: Modifier = Modifier,
+    wellnessViewModel: WellnessViewModel = viewModel()
+) {
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background
     ) {
         Column(Modifier.fillMaxSize()) {
             StatefullWaterCounter()
-            val tasks = remember { getWellnessTasks().toMutableStateList() }
+
             WellnessTasksList(
-                tasks,
-                onCloseTask = { task -> tasks.remove(task) },
+                wellnessViewModel.tasks,
+                onCheckedTask = { task, checked -> wellnessViewModel.updateTask(task, checked) },
+                onCloseTask = { task -> wellnessViewModel.remove(task) },
                 modifier = modifier.fillMaxWidth()
             )
         }
