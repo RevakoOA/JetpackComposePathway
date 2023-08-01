@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.sunflower.plantdetail
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -23,14 +24,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.google.samples.apps.sunflower.R
 import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
@@ -41,16 +43,39 @@ fun PlantName(name: String) {
         name,
         style = MaterialTheme.typography.h5,
         modifier = Modifier
-            .fillMaxWidth()
             .padding(horizontal = dimensionResource(id = R.dimen.margin_small))
+            .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
 
 @Composable
+fun PlantWatering(wateringInterval: Int) {
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        val centerWithPaddingModifier =
+            Modifier.padding(horizontal = dimensionResource(R.dimen.margin_small))
+        Text(
+            stringResource(R.string.watering_needs_prefix),
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.primaryVariant,
+            modifier = centerWithPaddingModifier.padding(top = dimensionResource(R.dimen.margin_normal))
+        )
+        Text(
+            pluralStringResource(
+                R.plurals.watering_needs_suffix, wateringInterval, wateringInterval
+            ), modifier = centerWithPaddingModifier
+        )
+
+    }
+}
+
+@Composable
 fun PlantDetailContent(plant: Plant) {
     Surface {
-        PlantName(name = plant.name)
+        Column(Modifier.padding(dimensionResource(R.dimen.margin_normal))) {
+            PlantName(name = plant.name)
+            PlantWatering(plant.wateringInterval)
+        }
     }
 }
 
@@ -63,9 +88,9 @@ fun PlantDetailDescription(viewModel: PlantDetailViewModel) {
     }
 }
 
-@Preview(widthDp = 320)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun PlantDetailContentPreview() {
-    val plant = Plant("id", "Apple", "Desription", 3, 30, "")
+    val plant = Plant("id", "Apple", "Description", 3, 30, "")
     PlantDetailContent(plant)
 }
