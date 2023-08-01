@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -38,7 +39,10 @@ private fun WellnessScreen(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background
     ) {
-        StatefullWaterCounter()
+        Column(Modifier.fillMaxSize()) {
+            StatefullWaterCounter()
+            WellnessTasksList(Modifier.fillMaxWidth())
+        }
     }
 }
 
@@ -78,5 +82,13 @@ private fun StatelessWaterCounter(
 private fun WaterCounterPreview() {
     BasicStateTheme {
         StatefullWaterCounter()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun WellnessScreenPreview() {
+    BasicStateTheme {
+        WellnessScreen()
     }
 }
