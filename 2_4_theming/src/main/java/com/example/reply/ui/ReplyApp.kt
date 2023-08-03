@@ -27,12 +27,14 @@ import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.example.reply.R
 
 @Composable
@@ -58,34 +60,36 @@ fun ReplyAppContent(
 
     val selectedDestination = remember { mutableStateOf(ReplyRoute.INBOX) }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
+    Surface(tonalElevation = 5.dp) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+        ) {
 
-        if (selectedDestination.value == ReplyRoute.INBOX) {
-            ReplyInboxScreen(
-                replyHomeUIState = replyHomeUIState,
-                closeDetailScreen = closeDetailScreen,
-                navigateToDetail = navigateToDetail,
-                modifier = Modifier.weight(1f)
-            )
-        } else {
-            EmptyComingSoon(modifier = Modifier.weight(1f))
-        }
-
-        NavigationBar(modifier = Modifier.fillMaxWidth()) {
-            TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
-                NavigationBarItem(
-                    selected = selectedDestination.value == replyDestination.route,
-                    onClick = { selectedDestination.value = replyDestination.route },
-                    icon = {
-                        Icon(
-                            imageVector = replyDestination.selectedIcon,
-                            contentDescription = stringResource(id = replyDestination.iconTextId)
-                        )
-                    }
+            if (selectedDestination.value == ReplyRoute.INBOX) {
+                ReplyInboxScreen(
+                    replyHomeUIState = replyHomeUIState,
+                    closeDetailScreen = closeDetailScreen,
+                    navigateToDetail = navigateToDetail,
+                    modifier = Modifier.weight(1f)
                 )
+            } else {
+                EmptyComingSoon(modifier = Modifier.weight(1f))
+            }
+
+            NavigationBar(modifier = Modifier.fillMaxWidth()) {
+                TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
+                    NavigationBarItem(
+                        selected = selectedDestination.value == replyDestination.route,
+                        onClick = { selectedDestination.value = replyDestination.route },
+                        icon = {
+                            Icon(
+                                imageVector = replyDestination.selectedIcon,
+                                contentDescription = stringResource(id = replyDestination.iconTextId)
+                            )
+                        }
+                    )
+                }
             }
         }
     }
