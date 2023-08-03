@@ -124,6 +124,7 @@ fun ReplyTheme(
 
     MaterialTheme(
         colorScheme = colors,
+        typography = Typography,
         content = content
     )
 }
