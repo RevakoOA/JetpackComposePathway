@@ -7,6 +7,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -15,6 +16,7 @@
             <option value="$PROJECT_DIR$/1_6_basic_layouts" />
             <option value="$PROJECT_DIR$/1_7_basic_state" />
             <option value="$PROJECT_DIR$/2_4_theming" />
+            <option value="$PROJECT_DIR$/2_8_animating" />
           </set>
         </option>
       </GradleProjectSettings>
